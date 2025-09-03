@@ -1,0 +1,15 @@
+/workspaces/PicoGK-Oilfire/Oilfire/bin/Debug/net8.0/Oilfire
+/workspaces/PicoGK-Oilfire/Oilfire/bin/Debug/net8.0/Oilfire.deps.json
+/workspaces/PicoGK-Oilfire/Oilfire/bin/Debug/net8.0/Oilfire.runtimeconfig.json
+/workspaces/PicoGK-Oilfire/Oilfire/bin/Debug/net8.0/Oilfire.dll
+/workspaces/PicoGK-Oilfire/Oilfire/bin/Debug/net8.0/Oilfire.pdb
+/workspaces/PicoGK-Oilfire/Oilfire/obj/Debug/net8.0/Oilfire.GeneratedMSBuildEditorConfig.editorconfig
+/workspaces/PicoGK-Oilfire/Oilfire/obj/Debug/net8.0/Oilfire.AssemblyInfoInputs.cache
+/workspaces/PicoGK-Oilfire/Oilfire/obj/Debug/net8.0/Oilfire.AssemblyInfo.cs
+/workspaces/PicoGK-Oilfire/Oilfire/obj/Debug/net8.0/Oilfire.csproj.CoreCompileInputs.cache
+/workspaces/PicoGK-Oilfire/Oilfire/obj/Debug/net8.0/Oilfire.sourcelink.json
+/workspaces/PicoGK-Oilfire/Oilfire/obj/Debug/net8.0/Oilfire.dll
+/workspaces/PicoGK-Oilfire/Oilfire/obj/Debug/net8.0/refint/Oilfire.dll
+/workspaces/PicoGK-Oilfire/Oilfire/obj/Debug/net8.0/Oilfire.pdb
+/workspaces/PicoGK-Oilfire/Oilfire/obj/Debug/net8.0/Oilfire.genruntimeconfig.cache
+/workspaces/PicoGK-Oilfire/Oilfire/obj/Debug/net8.0/ref/Oilfire.dll
