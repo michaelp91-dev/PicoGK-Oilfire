@@ -1,0 +1,35 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oilfire", "Oilfire\Oilfire.csproj", "{5F74C2BE-AD52-8E21-2CBD-76DD29443857}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Oilfire (1)", "Oilfire (1)", "{762FC7CB-BD38-745A-7720-A8595AA73646}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PicoGK", "Oilfire\PicoGK\PicoGK.csproj", "{F79A7775-9028-42B4-4895-D7708CCE42DC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5F74C2BE-AD52-8E21-2CBD-76DD29443857}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F74C2BE-AD52-8E21-2CBD-76DD29443857}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F74C2BE-AD52-8E21-2CBD-76DD29443857}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F74C2BE-AD52-8E21-2CBD-76DD29443857}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F79A7775-9028-42B4-4895-D7708CCE42DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F79A7775-9028-42B4-4895-D7708CCE42DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F79A7775-9028-42B4-4895-D7708CCE42DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F79A7775-9028-42B4-4895-D7708CCE42DC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F79A7775-9028-42B4-4895-D7708CCE42DC} = {762FC7CB-BD38-745A-7720-A8595AA73646}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A0EC3EF0-E5F8-418E-A72B-A86087C90B7E}
+	EndGlobalSection
+EndGlobal
