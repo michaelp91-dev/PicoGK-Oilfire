@@ -1,3 +1,6 @@
 [submodule "Oilfire/PicoGK"]
 	path = Oilfire/PicoGK
 	url = https://github.com/michaelp91-dev/PicoGK.git
+[submodule "PicoGKRuntime"]
+	path = PicoGKRuntime
+	url = https://github.com/michaelp91-dev/PicoGKRuntime.git
