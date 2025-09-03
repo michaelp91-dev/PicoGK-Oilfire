@@ -10,7 +10,7 @@ using System.Linq;
 
 try
 {
-    using (PicoGK.Library oLibrary = new(0.5f))
+    using (PicoGK.Library oLibrary = new(0.1f))
     {
         // Define arrays for the design parameters to iterate through
         float[] afThrustLBF = { 200f };
