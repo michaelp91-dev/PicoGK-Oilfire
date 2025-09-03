@@ -6,7 +6,8 @@ using System.IO;
 public static class RocketEngineCalculator
 {
     public static Dictionary<string, float> Calculation(
-        string sFuelType, // "gasoline" or "alcohol"
+        string sFuelType, // "gasoline", "alcohol", or "ethanol"
+        string sOxidizerType, // "oxygen" or "nitrousoxide"
         float fThrustLBF,
         float fChamberPressurePSI,
         float fMixtureRatio,
@@ -20,60 +21,102 @@ public static class RocketEngineCalculator
         const float fR_gas_constantFT_LBF_LB_R = 65f;
         const float fG_gravitational_constantFT_S2 = 32.2f;
         const float fWaterDensityLB_FT3 = 62.4f;
-        const float fOxygenDensityLB_FT3 = 2.26f;
-
+        
         // --- Selectable Fuel Properties ---
         float fFuelDensityLB_FT3;
+        float fOxidizerDensityLB_FT3;
         var flameTempData = new List<(float mixtureRatio, float temp)>();
         var ispData = new List<(float chamberPressure, float isp)>();
 
-        if (sFuelType.ToLower() == "alcohol")
+        if (sOxidizerType.ToLower() == "oxygen")
         {
-            // Data for Gaseous Oxygen & Methyl Alcohol
-            fFuelDensityLB_FT3 = 48f;
+            fOxidizerDensityLB_FT3 = 2.26f; // Gaseous Oxygen
 
-            // Flame temperature data
-            flameTempData = new List<(float mixtureRatio, float temp)>
+            if (sFuelType.ToLower() == "alcohol")
             {
-                (1.0f, 5000f + 460f),
-                (1.2f, 5220f + 460f),
-                (1.5f, 5250f + 460f),
-                (2.0f, 5000f + 460f)
-            };
+                // Data for Gaseous Oxygen & Methyl Alcohol
+                fFuelDensityLB_FT3 = 48f;
 
-            // Specific impulse data
-            ispData = new List<(float chamberPressure, float isp)>
+                // Flame temperature data
+                flameTempData = new List<(float mixtureRatio, float temp)>
+                {
+                    (1.0f, 5000f + 460f),
+                    (1.2f, 5220f + 460f),
+                    (1.5f, 5250f + 460f),
+                    (2.0f, 5000f + 460f)
+                };
+
+                // Specific impulse data
+                ispData = new List<(float chamberPressure, float isp)>
+                {
+                    (100f, 205f),
+                    (200f, 230f),
+                    (300f, 248f),
+                    (400f, 258f),
+                    (500f, 265f)
+                };
+            }
+            else // Default to gasoline
             {
-                (100f, 205f),
-                (200f, 230f),
-                (300f, 248f),
-                (400f, 258f),
-                (500f, 265f)
-            };
+                // Data for Gaseous Oxygen & Gasoline
+                fFuelDensityLB_FT3 = 44.5f;
+
+                // Flame temperature data
+                flameTempData = new List<(float mixtureRatio, float temp)>
+                {
+                    (1.5f, 4500f + 460f),
+                    (2.0f, 5500f + 460f),
+                    (2.5f, 5742f + 460f),
+                    (3.0f, 5500f + 460f),
+                };
+
+                // Specific impulse data
+                ispData = new List<(float chamberPressure, float isp)>
+                {
+                    (100f, 220f),
+                    (200f, 244f),
+                    (300f, 260f),
+                    (400f, 270f),
+                    (500f, 279f)
+                };
+            }
         }
-        else // Default to gasoline
+        else // Nitrous Oxide
         {
-            // Data for Gaseous Oxygen & Gasoline
-            fFuelDensityLB_FT3 = 44.5f;
+            fOxidizerDensityLB_FT3 = 54.9f; // Liquid Nitrous Oxide at 500 psia
 
-            // Flame temperature data
-            flameTempData = new List<(float mixtureRatio, float temp)>
+            if (sFuelType.ToLower() == "ethanol")
             {
-                (1.5f, 4500f + 460f),
-                (2.0f, 5500f + 460f),
-                (2.5f, 5742f + 460f),
-                (3.0f, 5500f + 460f),
-            };
+                // Data for Nitrous Oxide & Ethanol
+                fFuelDensityLB_FT3 = 49.3f;
 
-            // Specific impulse data
-            ispData = new List<(float chamberPressure, float isp)>
+                // Flame temperature data
+                flameTempData = new List<(float mixtureRatio, float temp)>
+                {
+                    (3.0f, 4500f + 460f),
+                    (4.0f, 5000f + 460f),
+                    (5.0f, 5300f + 460f),
+                    (6.0f, 5100f + 460f)
+                };
+
+                // Specific impulse data
+                ispData = new List<(float chamberPressure, float isp)>
+                {
+                    (100f, 230f),
+                    (200f, 245f),
+                    (300f, 255f),
+                    (400f, 260f),
+                    (500f, 265f)
+                };
+            }
+            else
             {
-                (100f, 220f),
-                (200f, 244f),
-                (300f, 260f),
-                (400f, 270f),
-                (500f, 279f)
-            };
+                // Placeholder for other fuels with Nitrous Oxide
+                // You can add more fuel options here
+                fFuelDensityLB_FT3 = 49.3f; // Defaulting to ethanol
+                flameTempData = new List<(float mixtureRatio, float temp)>();
+                ispData = new List<(float chamberPressure, float isp)>();
+            }
         }
 
 
@@ -100,6 +143,7 @@ public static class RocketEngineCalculator
         Func<List<(float xVal, float yVal)>, float, Func<(float xVal, float yVal), float>, Func<(float xVal, float yVal), float>, float> Interpolate =
             (data, x, xKeySelector, yKeySelector) =>
             {
+                if (data.Count == 0) return 0;
                 if (x <= xKeySelector(data[0])) return yKeySelector(data[0]);
                 if (x >= xKeySelector(data[data.Count - 1])) return yKeySelector(data[data.Count - 1]);
 
@@ -169,7 +213,7 @@ public static class RocketEngineCalculator
         float fFuelHoleDiameterFT = (float)Math.Pow((4 * fFuelHoleAreaFT2) / Math.PI, 0.5);
 
 
-        float fOxygenFlowAreaFT2 = fOxygenFlowRateLBS / (fOxygenInjectorCd * ((float)Math.Pow(2 * fG_gravitational_constantFT_S2 * fOxygenDensityLB_FT3 * fOxygenInjectorDeltaPPSI, 0.5) * 12));
+        float fOxygenFlowAreaFT2 = fOxygenFlowRateLBS / (fOxygenInjectorCd * ((float)Math.Pow(2 * fG_gravitational_constantFT_S2 * fOxidizerDensityLB_FT3 * fOxygenInjectorDeltaPPSI, 0.5) * 12));
         float fOxygenHoleAreaFT2 = fOxygenFlowAreaFT2 / iNumOxygenInjectorHoles;
         float fOxygenHoleDiameterFT = (float)Math.Pow((4 * fOxygenHoleAreaFT2) / Math.PI, 0.5);
 
@@ -253,7 +297,7 @@ public static class RocketEngineCalculator
             Directory.CreateDirectory(directoryPath);
         }
 
-        string fileName = $"{sFuelType}_{fThrustLBF}_{fChamberPressurePSI}_{fMixtureRatio}_{fLStarIN}_{fDc_Dt_ratio}_results.txt";
+        string fileName = $"{sFuelType}_{sOxidizerType}_{fThrustLBF}_{fChamberPressurePSI}_{fMixtureRatio}_{fLStarIN}_{fDc_Dt_ratio}_results.txt";
         string filePath = Path.Combine(directoryPath, fileName);
 
         // Write the results to the file
